@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;700&family=Golos+Text:wght@400;500;600;700&display=swap");
+
+@theme {
+  --color-navy: #1f2a72;
+  --color-navy-2: #27368c;
+  --color-blue: #2b3f9e;
+  --color-royal: #3a55c8;
+  --color-orange: #f3852b;
+  --color-orange-dark: #e0701a;
+  --color-sky: #5fa6d8;
+  --color-sky-2: #3f86c4;
+  --color-sky-light: #cfe3f2;
+  --color-mist: #eef3fa;
+  --color-mist-2: #f6f9fd;
+  --color-ink: #19224f;
+  --color-muted: #5c6790;
+  --color-line: #dde5f2;
+  --color-ok: #1f9d6b;
+  --color-wait: #e8a32b;
+
+  --font-display: "Montserrat", sans-serif;
+  --font-body: "Golos Text", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-rev {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes wa-pulse {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.35); opacity: 0; }
+}

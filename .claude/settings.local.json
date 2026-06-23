@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(node screenshot-routes.mjs)",
+      "Bash(docker --version)",
+      "Bash(docker compose *)",
+      "Bash(tasklist)",
+      "PowerShell(Start-Process \"C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe\")",
+      "Bash(timeout 90 bash -c 'until docker info >/dev/null 2>&1; do sleep 3; done')",
+      "Bash(python -m venv .venv)",
+      "Bash(./.venv/Scripts/python -m pip install --upgrade pip --quiet)",
+      "Bash(./.venv/Scripts/python -m pip install -r requirements.txt --quiet)",
+      "Bash(node check-integration.mjs)",
+      "Bash(pkill -f \"uvicorn app.main\")",
+      "Bash(pkill -f \"vite\")"
+    ]
+  }
+}

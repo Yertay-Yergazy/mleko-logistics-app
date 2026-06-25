@@ -112,19 +112,19 @@ Mono для кодов/номеров.
 
 ## 4. Карта маршрутов
 
-| Маршрут | Страница | Источник в макете |
-|---|---|---|
-| `/` | HomePage | «Главная · илл. полупрозрачная» |
-| `/uslugi` | CatalogPage | «Каталог услуг» |
-| `/mezhdunarodnye` | InternationalPage | «Международные» |
-| `/vnutri-kz` | DomesticPage | «Внутри КЗ» |
-| `/uslugi/dopolnitelnye` | AdditionalServicesPage | «Доп. услуги» |
-| `/raschet` | CalculatorPage | «Расчёт стоимости» |
-| `/bron/:id` | BookingDetailPage | «Бронирование» |
-| `/cabinet` | CabinetDashboardPage | «Личный кабинет» |
-| `/cabinet/documents` | CabinetDocumentsPage | пункт сайдбара «Документы» |
-| `/cabinet/profile` | CabinetProfilePage | пункт сайдбара «Профиль» |
-| `/cabinet/settings` | CabinetSettingsPage | пункт сайдбара «Настройки» |
+| Маршрут                 | Страница               | Источник в макете               |
+| ----------------------- | ---------------------- | ------------------------------- |
+| `/`                     | HomePage               | «Главная · илл. полупрозрачная» |
+| `/uslugi`               | CatalogPage            | «Каталог услуг»                 |
+| `/mezhdunarodnye`       | InternationalPage      | «Международные»                 |
+| `/vnutri-kz`            | DomesticPage           | «Внутри КЗ»                     |
+| `/uslugi/dopolnitelnye` | AdditionalServicesPage | «Доп. услуги»                   |
+| `/raschet`              | CalculatorPage         | «Расчёт стоимости»              |
+| `/bron/:id`             | BookingDetailPage      | «Бронирование»                  |
+| `/cabinet`              | CabinetDashboardPage   | «Личный кабинет»                |
+| `/cabinet/documents`    | CabinetDocumentsPage   | пункт сайдбара «Документы»      |
+| `/cabinet/profile`      | CabinetProfilePage     | пункт сайдбара «Профиль»        |
+| `/cabinet/settings`     | CabinetSettingsPage    | пункт сайдбара «Настройки»      |
 
 Публичные страницы оборачиваются в `SiteLayout` (TopNav+Footer+WhatsApp),
 `/cabinet/*` — в `CabinetLayout` (Sidebar+Topbar), без TopNav/Footer.
@@ -175,8 +175,8 @@ export async function getServices(): Promise<Service[]> {
 
 ## 7. Контент/контакты (источник истины — макет)
 
-- Телефон: `+7 727 304 33 61`
-- WhatsApp: `+7 705 596 96 04`
+- Телефон: `+7 708 936 68 52`
+- WhatsApp: `+7 775 973 51 78 `
 - E-mail: `byte083@gmail.com`
 - Адреса: г. Алматы, Закарпатская 51Б, оф. 512; г. Астана, Рыскулбекова 16/1,
   оф. 323

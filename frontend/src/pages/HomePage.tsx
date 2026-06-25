@@ -7,6 +7,7 @@ import ContactCard from "../components/molecules/ContactCard";
 import { offerSlides, featuredOffer } from "../api/mockData/offers";
 import type { Offer } from "../api/types";
 import heroCollage from "../assets/photos/hero-collage.webp";
+import { CONTACTS } from "../constants/contacts";
 
 export default function HomePage() {
   const [slides, setSlides] = useState<Offer[][]>([]);
@@ -27,7 +28,8 @@ export default function HomePage() {
               Весь мир в одной <span className="text-orange">доставке</span>
             </h1>
             <p className="mt-4 max-w-[520px] text-[17px] leading-relaxed text-[#c7d2ef]">
-              Авто, авиа, море и ЖД под ключ. Считаем стоимость и бронируем груз онлайн.
+              Авто, авиа, море и ЖД под ключ. Считаем стоимость и бронируем груз
+              онлайн.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link to="/raschet">
@@ -39,7 +41,11 @@ export default function HomePage() {
             </div>
           </div>
           <div className="hidden items-center justify-center lg:flex">
-            <img src={heroCollage} alt="Авиа, авто и морские перевозки" className="w-full max-w-[560px]" />
+            <img
+              src={heroCollage}
+              alt="Авиа, авто и морские перевозки"
+              className="w-full max-w-[560px]"
+            />
           </div>
         </div>
       </section>
@@ -52,8 +58,12 @@ export default function HomePage() {
             <span className="inline-block rounded-full bg-orange px-3 py-1 font-mono text-[10.5px] font-bold uppercase text-white">
               {featuredOffer.badge}
             </span>
-            <div className="mt-2 font-display text-2xl font-extrabold italic text-white">{featuredOffer.title}</div>
-            <p className="mt-1 max-w-lg text-sm text-[#c7d2ef]">{featuredOffer.description}</p>
+            <div className="mt-2 font-display text-2xl font-extrabold italic text-white">
+              {featuredOffer.title}
+            </div>
+            <p className="mt-1 max-w-lg text-sm text-[#c7d2ef]">
+              {featuredOffer.description}
+            </p>
           </div>
           <Button className="mt-4 sm:mt-0">{featuredOffer.ctaLabel}</Button>
         </div>
@@ -69,13 +79,27 @@ export default function HomePage() {
               Работаем <span className="text-orange">24/7</span>
             </h2>
             <p className="mt-2 max-w-[560px] text-[15px] leading-relaxed text-muted">
-              Звоните или пишите в любое время суток — менеджер ответит в течение нескольких минут.
+              Звоните или пишите в любое время суток — менеджер ответит в
+              течение нескольких минут.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <ContactCard icon={<Icon name="phone" size={18} />} label="Телефон" value="+7 727 304 33 61" />
-            <ContactCard icon={<Icon name="email" size={18} />} label="E-mail" value="byte083@gmail.com" />
-            <ContactCard icon={<Icon name="whatsapp" size={18} />} label="WhatsApp" value="+7 705 596 96 04" tone="green" />
+            <ContactCard
+              icon={<Icon name="phone" size={18} />}
+              label="Телефон"
+              value={CONTACTS.phoneAdditional}
+            />
+            <ContactCard
+              icon={<Icon name="email" size={18} />}
+              label="E-mail"
+              value={CONTACTS.email}
+            />
+            <ContactCard
+              icon={<Icon name="whatsapp" size={18} />}
+              label="WhatsApp"
+              value={CONTACTS.whatsapp}
+              tone="green"
+            />
           </div>
         </div>
       </section>

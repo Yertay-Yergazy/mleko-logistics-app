@@ -1,5 +1,6 @@
 import Breadcrumb from "../components/molecules/Breadcrumb";
 import CalculatorForm from "../components/organisms/CalculatorForm";
+import { CONTACTS } from "../constants/contacts";
 
 export default function CalculatorPage() {
   return (
@@ -40,11 +41,11 @@ export default function CalculatorPage() {
           <div className="rounded-2xl border border-line bg-mist-2 p-6">
             <h3 className="font-display text-sm font-bold text-navy">Нужна помощь?</h3>
             <p className="mt-2 text-[13px] leading-relaxed">
-              <b>+7 705 596 96 04</b>
+              <b>{CONTACTS.whatsapp}</b>
               <br />
               <span className="text-muted">WhatsApp</span>
               <br />
-              <b>byte083@gmail.com</b>
+              <b>{CONTACTS.email}</b>
             </p>
           </div>
         </div>

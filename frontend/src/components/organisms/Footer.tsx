@@ -1,4 +1,5 @@
 import logo from "../../assets/logo.jpg";
+import { CONTACTS } from "../../constants/contacts";
 
 export default function Footer() {
   return (
@@ -28,9 +29,9 @@ export default function Footer() {
             <h4 className="mb-3 font-display text-[13px] font-extrabold uppercase tracking-wide text-[#aebbe6]">
               Контакты
             </h4>
-            <a className="mb-2 block text-[13.5px] text-[#dde4f6]">+7 727 304 33 61</a>
-            <a className="mb-2 block text-[13.5px] text-[#dde4f6]">+7 705 596 96 04</a>
-            <a className="mb-2 block text-[13.5px] text-[#dde4f6]">byte083@gmail.com</a>
+            <a className="mb-2 block text-[13.5px] text-[#dde4f6]">{CONTACTS.whatsapp}</a>
+            <a className="mb-2 block text-[13.5px] text-[#dde4f6]">{CONTACTS.phoneAdditional}</a>
+            <a className="mb-2 block text-[13.5px] text-[#dde4f6]">{CONTACTS.email}</a>
           </div>
         </div>
       </div>

@@ -16,7 +16,9 @@ export default function CabinetProfilePage() {
               {user.initials}
             </span>
             <div>
-              <div className="font-display font-bold text-navy">{user.name}</div>
+              <div className="font-display font-bold text-navy">
+                {user.name}
+              </div>
               <div className="text-sm text-muted">{user.company}</div>
             </div>
           </div>
@@ -35,7 +37,7 @@ export default function CabinetProfilePage() {
             </div>
             <div>
               <FieldLabel>Телефон</FieldLabel>
-              <Input defaultValue="+7 705 596 96 04" />
+              <Input defaultValue="+7 708 936 6852" />
             </div>
           </div>
           <Button className="mt-5">Сохранить изменения</Button>

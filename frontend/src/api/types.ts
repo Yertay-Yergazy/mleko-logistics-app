@@ -10,6 +10,7 @@ export interface Service {
   description: string;
   priceFrom: string;
   ctaLabel: string;
+  image?: string;
 }
 
 export interface Offer {

@@ -6,6 +6,7 @@ import OffersCarousel from "../components/organisms/OffersCarousel";
 import ContactCard from "../components/molecules/ContactCard";
 import { offerSlides, featuredOffer } from "../api/mockData/offers";
 import type { Offer } from "../api/types";
+import heroCollage from "../assets/photos/hero-collage.webp";
 
 export default function HomePage() {
   const [slides, setSlides] = useState<Offer[][]>([]);
@@ -37,8 +38,8 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
-          <div className="hidden h-[260px] items-center justify-center rounded-2xl bg-white/10 text-sm text-white/60 lg:flex">
-            фото: самолёт + фура + контейнер
+          <div className="hidden items-center justify-center lg:flex">
+            <img src={heroCollage} alt="Авиа, авто и морские перевозки" className="w-full max-w-[560px]" />
           </div>
         </div>
       </section>

@@ -1,4 +1,13 @@
 import type { Service } from "../types";
+import svcAuto from "../../assets/photos/svc-auto.jpg";
+import svcAir from "../../assets/photos/svc-air.jpg";
+import svcSea from "../../assets/photos/svc-sea.jpg";
+import svcRail from "../../assets/photos/svc-rail.jpg";
+import svcMultimodal from "../../assets/photos/svc-multimodal.jpg";
+import svcDomestic from "../../assets/photos/svc-domestic.jpg";
+import svcDoor from "../../assets/photos/svc-door.jpg";
+import svcCustoms from "../../assets/photos/svc-customs.jpg";
+import svcWarehouse from "../../assets/photos/svc-warehouse.jpg";
 
 export const services: Service[] = [
   {
@@ -9,6 +18,7 @@ export const services: Service[] = [
     description: "Сборные и полные загрузки по всему миру. Import / Export.",
     priceFrom: "от $1.10/кг",
     ctaLabel: "Рассчитать",
+    image: svcAuto,
   },
   {
     id: "air",
@@ -18,6 +28,7 @@ export const services: Service[] = [
     description: "Срочные и регулярные авиа-рейсы. Свободные места еженедельно.",
     priceFrom: "от $4.90/кг",
     ctaLabel: "Рассчитать",
+    image: svcAir,
   },
   {
     id: "sea",
@@ -27,6 +38,7 @@ export const services: Service[] = [
     description: "Import / Export / Transit. Контейнерные и сборные отправки.",
     priceFrom: "от $850/конт",
     ctaLabel: "Рассчитать",
+    image: svcSea,
   },
   {
     id: "rail",
@@ -36,6 +48,7 @@ export const services: Service[] = [
     description: "Импортные перевозки по сети железных дорог.",
     priceFrom: "от $1 200",
     ctaLabel: "Рассчитать",
+    image: svcRail,
   },
   {
     id: "multimodal",
@@ -45,6 +58,7 @@ export const services: Service[] = [
     description: "Интермодальные перевозки: комбинация авто, авиа, моря и ЖД.",
     priceFrom: "по запросу",
     ctaLabel: "Рассчитать",
+    image: svcMultimodal,
   },
   {
     id: "domestic",
@@ -54,6 +68,7 @@ export const services: Service[] = [
     description: "Авто (FTL / LTL) и авиа внутри Казахстана. Бронирование онлайн.",
     priceFrom: "от 15 000 ₸",
     ctaLabel: "Рассчитать",
+    image: svcDomestic,
   },
   {
     id: "door-to-door",
@@ -63,6 +78,7 @@ export const services: Service[] = [
     description: "Доставка внутри городов: Алматы, Астана, Москва, Нью-Йорк и др.",
     priceFrom: "от 8 000 ₸",
     ctaLabel: "Рассчитать",
+    image: svcDoor,
   },
   {
     id: "customs",
@@ -72,6 +88,7 @@ export const services: Service[] = [
     description: "Брокерские услуги, оформление под ключ, СВХ в 3 км (MA ALA).",
     priceFrom: "от $120",
     ctaLabel: "Рассчитать",
+    image: svcCustoms,
   },
   {
     id: "warehouse",
@@ -81,6 +98,7 @@ export const services: Service[] = [
     description: "Хранение, упаковка и доупаковка груза. СВХ в 3 км от аэропорта.",
     priceFrom: "от $2/палета",
     ctaLabel: "Рассчитать",
+    image: svcWarehouse,
   },
 ];
 

@@ -1,6 +1,6 @@
 import { requestFilters } from "./mockData/cabinet";
-import { apiGet } from "./client";
-import type { CabinetRequest, CabinetRequestDetail, CabinetStat, CabinetUser } from "./types";
+import { apiGet, apiPatch } from "./client";
+import type { CabinetRequest, CabinetRequestDetail, CabinetStat, CabinetUser, RequestStatusOption } from "./types";
 
 export async function getCabinetUser(): Promise<CabinetUser> {
   return apiGet<CabinetUser>("/cabinet/user");
@@ -25,4 +25,12 @@ export async function getRequestDetail(id: string): Promise<CabinetRequestDetail
   } catch {
     return undefined;
   }
+}
+
+export async function getRequestStatusOptions(): Promise<RequestStatusOption[]> {
+  return apiGet<RequestStatusOption[]>("/cabinet/requests/statuses");
+}
+
+export async function updateRequestStatus(id: string, statusLabel: string): Promise<CabinetRequest> {
+  return apiPatch<CabinetRequest>(`/cabinet/requests/${encodeURIComponent(id)}/status`, { statusLabel });
 }

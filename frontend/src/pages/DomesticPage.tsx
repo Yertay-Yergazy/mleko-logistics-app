@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Breadcrumb from "../components/molecules/Breadcrumb";
 import Button from "../components/atoms/Button";
 import StatusBadge from "../components/atoms/StatusBadge";
@@ -33,8 +34,8 @@ export default function DomesticPage() {
               Срочная авиа-доставка между городами Казахстана. Идеально для срочных и ценных грузов.
             </p>
             <div className="mt-5 flex gap-3">
-              <Button variant="outline" size="sm">Рассчитать</Button>
-              <Button size="sm">Забронировать</Button>
+              <Link to="/raschet?transportMode=air"><Button variant="outline" size="sm">Рассчитать</Button></Link>
+              <Link to="/raschet?transportMode=air"><Button size="sm">Забронировать</Button></Link>
             </div>
           </div>
 
@@ -57,8 +58,8 @@ export default function DomesticPage() {
               Полные и сборные загрузки автотранспортом по всей территории страны.
             </p>
             <div className="mt-5 flex gap-3">
-              <Button variant="outline" size="sm">Рассчитать</Button>
-              <Button size="sm">Забронировать</Button>
+              <Link to="/raschet?transportMode=auto"><Button variant="outline" size="sm">Рассчитать</Button></Link>
+              <Link to="/raschet?transportMode=auto"><Button size="sm">Забронировать</Button></Link>
             </div>
           </div>
         </div>

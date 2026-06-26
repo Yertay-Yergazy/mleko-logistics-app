@@ -5,6 +5,18 @@ from pydantic import BaseModel, ConfigDict, Field
 StatusTone = Literal["wait", "ok", "pending", "alert"]
 TransportMode = Literal["air", "auto", "sea"]
 
+# Single source of truth for status labels selectable in the cabinet UI —
+# maps each label to the badge tone it should render with.
+STATUS_OPTIONS: dict[str, StatusTone] = {
+    "Новая заявка": "wait",
+    "В ожидании": "wait",
+    "Оформление": "pending",
+    "На таможне": "wait",
+    "В пути": "wait",
+    "Доставлен": "ok",
+    "Проблема": "alert",
+}
+
 
 class TimelineStep(BaseModel):
     label: str
@@ -34,6 +46,9 @@ class RequestDetailEmbed(BaseModel):
     cargo_type: str = Field(alias="cargoType")
     packaging: str
     documents: list[ShipmentDocument]
+    email: str | None = None
+    whatsapp: str | None = None
+    comment: str | None = None
 
 
 class RequestDocument(BaseModel):
@@ -70,6 +85,8 @@ class RequestDocument(BaseModel):
     def to_detail(self) -> "CabinetRequestDetail":
         return CabinetRequestDetail(
             id=self.id,
+            status=self.status,
+            statusLabel=self.status_label,
             fromCode=self.detail.from_code,
             fromCity=self.detail.from_city,
             toCode=self.detail.to_code,
@@ -82,6 +99,9 @@ class RequestDocument(BaseModel):
             cargoType=self.detail.cargo_type,
             packaging=self.detail.packaging,
             documents=self.detail.documents,
+            email=self.detail.email,
+            whatsapp=self.detail.whatsapp,
+            comment=self.detail.comment,
         )
 
 
@@ -104,6 +124,8 @@ class CabinetRequestDetail(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     id: str
+    status: StatusTone
+    status_label: str = Field(alias="statusLabel")
     from_code: str = Field(alias="fromCode")
     from_city: str = Field(alias="fromCity")
     to_code: str = Field(alias="toCode")
@@ -116,6 +138,9 @@ class CabinetRequestDetail(BaseModel):
     cargo_type: str = Field(alias="cargoType")
     packaging: str
     documents: list[ShipmentDocument]
+    email: str | None = None
+    whatsapp: str | None = None
+    comment: str | None = None
 
 
 class CabinetUser(BaseModel):
@@ -132,3 +157,14 @@ class CabinetStat(BaseModel):
     value: str
     trend: str
     tone: Literal["orange", "blue", "green", "navy"]
+
+
+class RequestStatusOption(BaseModel):
+    label: str
+    tone: StatusTone
+
+
+class UpdateRequestStatusRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    status_label: str = Field(alias="statusLabel")

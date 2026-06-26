@@ -11,6 +11,7 @@ export interface Service {
   priceFrom: string;
   ctaLabel: string;
   image?: string;
+  transportMode?: string;
 }
 
 export interface Offer {
@@ -124,8 +125,15 @@ export interface ShipmentDocument {
   status: "ready" | "needs-signature";
 }
 
+export interface RequestStatusOption {
+  label: string;
+  tone: StatusTone;
+}
+
 export interface CabinetRequestDetail {
   id: string;
+  status: StatusTone;
+  statusLabel: string;
   fromCode: string;
   fromCity: string;
   toCode: string;
@@ -138,4 +146,7 @@ export interface CabinetRequestDetail {
   cargoType: string;
   packaging: string;
   documents: ShipmentDocument[];
+  email?: string;
+  whatsapp?: string;
+  comment?: string;
 }

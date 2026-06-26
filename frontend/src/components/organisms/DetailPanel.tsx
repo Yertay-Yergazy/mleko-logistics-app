@@ -1,18 +1,56 @@
-import type { CabinetRequestDetail } from "../../api/types";
+import { useState } from "react";
+import type { CabinetRequestDetail, RequestStatusOption } from "../../api/types";
+import { updateRequestStatus } from "../../api/cabinetApi";
 import Icon from "../atoms/Icon";
 import StatusBadge from "../atoms/StatusBadge";
 
-export default function DetailPanel({ detail }: { detail: CabinetRequestDetail }) {
+function buildWhatsAppLink(phone: string): string {
+  return `https://wa.me/${phone.replace(/[^\d]/g, "")}`;
+}
+
+export default function DetailPanel({
+  detail,
+  statusOptions,
+  onStatusChange,
+}: {
+  detail: CabinetRequestDetail;
+  statusOptions: RequestStatusOption[];
+  onStatusChange: () => void;
+}) {
+  const [updating, setUpdating] = useState(false);
+
+  async function handleStatusChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setUpdating(true);
+    try {
+      await updateRequestStatus(detail.id, e.target.value);
+      onStatusChange();
+    } finally {
+      setUpdating(false);
+    }
+  }
+
   return (
     <aside className="flex w-[360px] flex-none flex-col overflow-hidden border-l border-line bg-white">
       <div className="flex-none border-b border-line px-5 pb-3.5 pt-4.5">
         <div className="flex items-center justify-between">
           <span className="font-display text-[15px] font-extrabold text-navy">{detail.id}</span>
-          <StatusBadge status="wait" label="В пути" />
+          <StatusBadge status={detail.status} label={detail.statusLabel} />
         </div>
         <div className="mt-1 text-xs text-[#7a8ab8]">
           {detail.fromCity} ({detail.fromCode}) → {detail.toCity} ({detail.toCode})
         </div>
+        <select
+          className="mt-2.5 w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink disabled:opacity-50"
+          value={detail.statusLabel}
+          disabled={updating}
+          onChange={handleStatusChange}
+        >
+          {statusOptions.map((opt) => (
+            <option key={opt.label} value={opt.label}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="flex-1 overflow-y-auto">
@@ -73,6 +111,43 @@ export default function DetailPanel({ detail }: { detail: CabinetRequestDetail }
           </div>
         </section>
 
+        {(detail.email || detail.whatsapp || detail.comment) && (
+          <section className="border-b border-line px-5 py-3.5">
+            <div className="mb-2.5 font-mono text-[10px] font-bold uppercase tracking-wide text-[#9aaac8]">
+              Контакты клиента
+            </div>
+            <div className="flex flex-col gap-1.5 text-[12.5px]">
+              {detail.email && (
+                <div>
+                  <span className="text-muted">E-mail: </span>
+                  <a href={`mailto:${detail.email}`} className="font-semibold text-blue">
+                    {detail.email}
+                  </a>
+                </div>
+              )}
+              {detail.whatsapp && (
+                <div>
+                  <span className="text-muted">WhatsApp: </span>
+                  <a
+                    href={buildWhatsAppLink(detail.whatsapp)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold text-blue"
+                  >
+                    {detail.whatsapp}
+                  </a>
+                </div>
+              )}
+              {detail.comment && (
+                <div>
+                  <span className="text-muted">Комментарий: </span>
+                  {detail.comment}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         <section className="border-b border-line px-5 py-3.5">
           <div className="mb-2.5 font-mono text-[10px] font-bold uppercase tracking-wide text-[#9aaac8]">
             Детали груза
@@ -126,10 +201,24 @@ export default function DetailPanel({ detail }: { detail: CabinetRequestDetail }
             <Icon name="download" size={14} />
             Документы
           </button>
-          <button className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border-[1.5px] border-orange py-2.5 text-xs font-bold text-orange">
+          <a
+            href={
+              detail.whatsapp
+                ? buildWhatsAppLink(detail.whatsapp)
+                : detail.email
+                  ? `mailto:${detail.email}`
+                  : undefined
+            }
+            target="_blank"
+            rel="noreferrer"
+            aria-disabled={!detail.whatsapp && !detail.email}
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg border-[1.5px] border-orange py-2.5 text-xs font-bold text-orange ${
+              !detail.whatsapp && !detail.email ? "pointer-events-none opacity-40" : ""
+            }`}
+          >
             <Icon name="phone" size={14} />
             Связаться
-          </button>
+          </a>
         </section>
       </div>
     </aside>

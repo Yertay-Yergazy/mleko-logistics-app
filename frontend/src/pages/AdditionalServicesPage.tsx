@@ -37,9 +37,9 @@ export default function AdditionalServicesPage() {
               <div className="flex flex-1 flex-col gap-1.5">
                 <div className="font-display text-base font-extrabold text-navy">{s.title}</div>
                 <p className="flex-1 text-[12.5px] leading-relaxed text-muted">{s.description}</p>
-                <Button size="sm" className="self-start">
-                  Запрос цены
-                </Button>
+                <Link to={`/raschet?comment=${encodeURIComponent(s.title)}`} className="self-start">
+                  <Button size="sm">Запрос цены</Button>
+                </Link>
               </div>
             </div>
           ))}
@@ -49,7 +49,9 @@ export default function AdditionalServicesPage() {
       <section className="bg-mist-2 px-6 py-10 lg:px-16">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="font-display text-xl font-extrabold text-navy">Перевозка опасных грузов</h2>
-          <Button size="sm">Запрос цены</Button>
+          <Link to={`/raschet?comment=${encodeURIComponent("Перевозка опасных грузов")}`}>
+            <Button size="sm">Запрос цены</Button>
+          </Link>
         </div>
         <p className="mt-1 text-sm text-muted">Работаем со всеми 9 классами опасности (ADR / IMDG / IATA).</p>
         <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-9">
@@ -70,9 +72,9 @@ export default function AdditionalServicesPage() {
               <div className="flex flex-1 flex-col gap-1.5">
                 <div className="font-display text-base font-extrabold text-navy">{s.title}</div>
                 <p className="flex-1 text-[12.5px] leading-relaxed text-muted">{s.description}</p>
-                <Button size="sm" className="self-start">
-                  Запрос цены
-                </Button>
+                <Link to={`/raschet?comment=${encodeURIComponent(s.title)}`} className="self-start">
+                  <Button size="sm">Запрос цены</Button>
+                </Link>
               </div>
             </div>
           ))}

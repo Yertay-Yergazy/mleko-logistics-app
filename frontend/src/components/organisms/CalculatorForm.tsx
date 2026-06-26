@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Icon from "../atoms/Icon";
 import { FieldLabel, Input, Select, Textarea } from "../atoms/Input";
 import SegmentedControl from "../atoms/SegmentedControl";
 import Checkbox from "../atoms/Checkbox";
 import Button from "../atoms/Button";
 import { submitQuoteRequest } from "../../api/quoteApi";
+import { ApiError } from "../../api/client";
 import type { QuoteRequest } from "../../api/types";
 
 const transportOptions = [
@@ -16,10 +18,21 @@ const transportOptions = [
 ];
 
 export default function CalculatorForm() {
-  const [transportMode, setTransportMode] = useState("auto");
+  const [searchParams] = useSearchParams();
+  const fromParam = searchParams.get("from");
+  const toParam = searchParams.get("to");
+  const commentParam = searchParams.get("comment");
+  const transportModeParam = searchParams.get("transportMode");
+  const initialTransportMode =
+    transportModeParam && transportOptions.some((o) => o.id === transportModeParam)
+      ? transportModeParam
+      : "auto";
+
+  const [transportMode, setTransportMode] = useState(initialTransportMode);
   const [replyByEmail, setReplyByEmail] = useState(true);
   const [replyByWhatsapp, setReplyByWhatsapp] = useState(true);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,8 +52,17 @@ export default function CalculatorForm() {
       replyByEmail,
       replyByWhatsapp,
     };
-    await submitQuoteRequest(payload);
-    setSent(true);
+    setError(null);
+    try {
+      await submitQuoteRequest(payload);
+      setSent(true);
+    } catch (err) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "Не удалось отправить заявку, попробуйте позже",
+      );
+    }
   }
 
   return (
@@ -54,11 +76,11 @@ export default function CalculatorForm() {
       <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <FieldLabel>Откуда</FieldLabel>
-          <Input name="from" defaultValue="Алматы, KZ" icon={<Icon name="pin-from" size={16} />} />
+          <Input name="from" defaultValue={fromParam || "Алматы, KZ"} icon={<Icon name="pin-from" size={16} />} />
         </div>
         <div>
           <FieldLabel>Куда</FieldLabel>
-          <Input name="to" defaultValue="Москва, RU" icon={<Icon name="pin-to" size={16} />} />
+          <Input name="to" defaultValue={toParam || "Москва, RU"} icon={<Icon name="pin-to" size={16} />} />
         </div>
       </div>
 
@@ -96,7 +118,11 @@ export default function CalculatorForm() {
 
       <div className="mb-5">
         <FieldLabel>Комментарий к грузу</FieldLabel>
-        <Textarea name="comment" placeholder="Габариты, особенности, опасный класс…" />
+        <Textarea
+          name="comment"
+          defaultValue={commentParam || undefined}
+          placeholder="Габариты, особенности, опасный класс…"
+        />
       </div>
 
       <div className="mb-5 h-px bg-line" />
@@ -116,6 +142,12 @@ export default function CalculatorForm() {
         <Checkbox checked={replyByEmail} onChange={setReplyByEmail} label="Ответ на e-mail" />
         <Checkbox checked={replyByWhatsapp} onChange={setReplyByWhatsapp} label="Ответ в WhatsApp" />
       </div>
+
+      {error && (
+        <div className="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+          {error}
+        </div>
+      )}
 
       <Button type="submit" className="h-[52px] w-full text-base">
         {sent ? "Заявка отправлена ✓" : "Отправить запрос на расчёт →"}

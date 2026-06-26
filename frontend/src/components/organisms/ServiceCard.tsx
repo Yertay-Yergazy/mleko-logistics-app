@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import type { Service } from "../../api/types";
 import Pill from "../atoms/Pill";
 import Button from "../atoms/Button";
+import { buildQuoteQuery } from "../../utils/quoteLink";
 
 export default function ServiceCard({
   service,
@@ -9,6 +11,12 @@ export default function ServiceCard({
   service: Service;
   layout?: "vertical" | "horizontal";
 }) {
+  const query = buildQuoteQuery(undefined, {
+    comment: service.title,
+    ...(service.transportMode ? { transportMode: service.transportMode } : {}),
+  });
+  const quoteLink = `/raschet?${query}`;
+
   if (layout === "horizontal") {
     return (
       <div className="flex gap-4 rounded-2xl border border-line bg-white p-4 shadow-[0_6px_16px_rgba(22,32,92,.05)]">
@@ -20,9 +28,9 @@ export default function ServiceCard({
         <div className="flex flex-1 flex-col gap-1.5">
           <div className="font-display text-base font-extrabold text-navy">{service.title}</div>
           <p className="flex-1 text-[12.5px] leading-relaxed text-muted">{service.description}</p>
-          <Button size="sm" className="self-start">
-            {service.ctaLabel}
-          </Button>
+          <Link to={quoteLink} className="self-start">
+            <Button size="sm">{service.ctaLabel}</Button>
+          </Link>
         </div>
       </div>
     );
@@ -43,7 +51,9 @@ export default function ServiceCard({
           <div className="font-mono text-[11px] text-muted">
             <b className="block font-display text-[17px] text-navy">{service.priceFrom}</b>
           </div>
-          <Button size="sm">{service.ctaLabel}</Button>
+          <Link to={quoteLink}>
+            <Button size="sm">{service.ctaLabel}</Button>
+          </Link>
         </div>
       </div>
     </div>

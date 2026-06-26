@@ -4,29 +4,46 @@ import CabinetTopbar from "../../components/organisms/CabinetTopbar";
 import StatCard from "../../components/molecules/StatCard";
 import RequestsTable from "../../components/organisms/RequestsTable";
 import DetailPanel from "../../components/organisms/DetailPanel";
-import { getCabinetRequests, getCabinetStats, getRequestDetail, getRequestFilters } from "../../api/cabinetApi";
-import type { CabinetRequest, CabinetRequestDetail, CabinetStat, CabinetUser } from "../../api/types";
+import {
+  getCabinetRequests,
+  getCabinetStats,
+  getRequestDetail,
+  getRequestFilters,
+  getRequestStatusOptions,
+} from "../../api/cabinetApi";
+import type { CabinetRequest, CabinetRequestDetail, CabinetStat, CabinetUser, RequestStatusOption } from "../../api/types";
 
 export default function CabinetDashboardPage() {
   const { user } = useOutletContext<{ user: CabinetUser }>();
   const [stats, setStats] = useState<CabinetStat[]>([]);
   const [requests, setRequests] = useState<CabinetRequest[]>([]);
   const [filters, setFilters] = useState<{ id: string; label: string }[]>([]);
+  const [statusOptions, setStatusOptions] = useState<RequestStatusOption[]>([]);
   const [selectedId, setSelectedId] = useState<string>();
   const [detail, setDetail] = useState<CabinetRequestDetail>();
 
-  useEffect(() => {
+  function refresh() {
     getCabinetStats().then(setStats);
-    getRequestFilters().then((f) => setFilters([...f]));
     getCabinetRequests().then((reqs) => {
       setRequests(reqs);
-      setSelectedId(reqs[0]?.id);
+      setSelectedId((current) => current ?? reqs[0]?.id);
     });
+  }
+
+  useEffect(() => {
+    getRequestFilters().then((f) => setFilters([...f]));
+    getRequestStatusOptions().then(setStatusOptions);
+    refresh();
   }, []);
 
   useEffect(() => {
     if (selectedId) getRequestDetail(selectedId).then(setDetail);
   }, [selectedId]);
+
+  function handleStatusChange() {
+    refresh();
+    if (selectedId) getRequestDetail(selectedId).then(setDetail);
+  }
 
   return (
     <>
@@ -40,7 +57,9 @@ export default function CabinetDashboardPage() {
           </div>
           <RequestsTable requests={requests} filters={filters} selectedId={selectedId} onSelect={setSelectedId} />
         </div>
-        {detail && <DetailPanel detail={detail} />}
+        {detail && (
+          <DetailPanel detail={detail} statusOptions={statusOptions} onStatusChange={handleStatusChange} />
+        )}
       </div>
     </>
   );

@@ -3,9 +3,26 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from app.config import get_current_user_id
 from app.db import get_database
-from app.models.cabinet import CabinetRequest, CabinetRequestDetail, CabinetStat, CabinetUser, RequestDocument
+from app.models.cabinet import (
+    STATUS_OPTIONS,
+    CabinetRequest,
+    CabinetRequestDetail,
+    CabinetStat,
+    CabinetUser,
+    RequestDocument,
+    RequestStatusOption,
+    UpdateRequestStatusRequest,
+)
 
 router = APIRouter(prefix="/api/cabinet", tags=["cabinet"])
+
+
+async def _find_request(db: AsyncIOMotorDatabase, request_id: str) -> RequestDocument:
+    raw = await db.requests.find_one({"_id": request_id})
+    if raw is None:
+        raise HTTPException(status_code=404, detail="Request not found")
+    return RequestDocument.model_validate(raw)
+
 
 # Trend captions are presentational, not derived data (KISS) — only the
 # numeric value is computed live from `requests`.
@@ -52,10 +69,35 @@ async def list_requests() -> list[CabinetRequest]:
     return [doc.to_summary() for doc in docs]
 
 
+@router.get("/requests/statuses", response_model=list[RequestStatusOption])
+async def list_request_statuses() -> list[RequestStatusOption]:
+    return [RequestStatusOption(label=label, tone=tone) for label, tone in STATUS_OPTIONS.items()]
+
+
 @router.get("/requests/{request_id}", response_model=CabinetRequestDetail)
 async def get_request(request_id: str) -> CabinetRequestDetail:
     db = get_database()
-    raw = await db.requests.find_one({"_id": request_id})
-    if raw is None:
-        raise HTTPException(status_code=404, detail="Request not found")
-    return RequestDocument.model_validate(raw).to_detail()
+    doc = await _find_request(db, request_id)
+    return doc.to_detail()
+
+
+@router.patch("/requests/{request_id}/status", response_model=CabinetRequest)
+async def update_request_status(request_id: str, payload: UpdateRequestStatusRequest) -> CabinetRequest:
+    if payload.status_label not in STATUS_OPTIONS:
+        raise HTTPException(status_code=400, detail="Unknown status")
+
+    db = get_database()
+    await _find_request(db, request_id)
+    status_tone = STATUS_OPTIONS[payload.status_label]
+    await db.requests.update_one(
+        {"_id": request_id},
+        {
+            "$set": {
+                "status": status_tone,
+                "statusLabel": payload.status_label,
+                "arrivalDone": status_tone == "ok",
+            }
+        },
+    )
+    updated = await _find_request(db, request_id)
+    return updated.to_summary()

@@ -19,6 +19,7 @@ export const services: Service[] = [
     priceFrom: "от $1.10/кг",
     ctaLabel: "Рассчитать",
     image: svcAuto,
+    transportMode: "auto",
   },
   {
     id: "air",
@@ -29,6 +30,7 @@ export const services: Service[] = [
     priceFrom: "от $4.90/кг",
     ctaLabel: "Рассчитать",
     image: svcAir,
+    transportMode: "air",
   },
   {
     id: "sea",
@@ -39,6 +41,7 @@ export const services: Service[] = [
     priceFrom: "от $850/конт",
     ctaLabel: "Рассчитать",
     image: svcSea,
+    transportMode: "sea",
   },
   {
     id: "rail",
@@ -49,6 +52,7 @@ export const services: Service[] = [
     priceFrom: "от $1 200",
     ctaLabel: "Рассчитать",
     image: svcRail,
+    transportMode: "rail",
   },
   {
     id: "multimodal",
@@ -59,6 +63,7 @@ export const services: Service[] = [
     priceFrom: "по запросу",
     ctaLabel: "Рассчитать",
     image: svcMultimodal,
+    transportMode: "multimodal",
   },
   {
     id: "domestic",
@@ -69,6 +74,7 @@ export const services: Service[] = [
     priceFrom: "от 15 000 ₸",
     ctaLabel: "Рассчитать",
     image: svcDomestic,
+    transportMode: "auto",
   },
   {
     id: "door-to-door",
@@ -79,6 +85,7 @@ export const services: Service[] = [
     priceFrom: "от 8 000 ₸",
     ctaLabel: "Рассчитать",
     image: svcDoor,
+    transportMode: "auto",
   },
   {
     id: "customs",

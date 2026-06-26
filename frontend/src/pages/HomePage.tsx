@@ -8,6 +8,7 @@ import { offerSlides, featuredOffer } from "../api/mockData/offers";
 import type { Offer } from "../api/types";
 import heroCollage from "../assets/photos/hero-collage.webp";
 import { CONTACTS } from "../constants/contacts";
+import { buildQuoteQuery } from "../utils/quoteLink";
 
 export default function HomePage() {
   const [slides, setSlides] = useState<Offer[][]>([]);
@@ -65,7 +66,9 @@ export default function HomePage() {
               {featuredOffer.description}
             </p>
           </div>
-          <Button className="mt-4 sm:mt-0">{featuredOffer.ctaLabel}</Button>
+          <Link to={`/raschet?${buildQuoteQuery(featuredOffer.title.split(" · ")[0], { transportMode: "air" })}`}>
+            <Button className="mt-4 sm:mt-0">{featuredOffer.ctaLabel}</Button>
+          </Link>
         </div>
       </section>
 
